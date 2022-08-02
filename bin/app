@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'chat'
+require 'parsers/arguments'
+require 'ui'
+
+options = Parsers::Arguments.new.parse(ARGV)
+Chat.new(options.node, UI.new).run
