@@ -69,9 +69,9 @@ RSpec.describe UI do
     end
   end
 
-  describe '#format_message' do
-    it 'formats message' do
-      expect(ui.format_message("hi\n", 'user')).to eq("<user> hi\n")
+  describe '#client_ui' do
+    it 'returns a client UI' do
+      expect(ui.client_ui).to be_a(ClientUI)
     end
   end
 end

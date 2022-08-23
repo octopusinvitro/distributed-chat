@@ -11,9 +11,10 @@ class Client
   end
 
   def run
-    ui.ask_for_username
+    client_ui.start(connect)
     [receive, send].each(&:join)
   rescue NoMethodError
+    client_ui.stop
     ui.print_error(UI::SERVER_DIED_ERROR)
   end
 
@@ -21,11 +22,19 @@ class Client
 
   attr_reader :server, :ui, :kernel
 
+  def connect
+    ui.ask_for_username
+    username = ui.gets
+    server.puts(username)
+    ui.puts(server.gets.chomp)
+    username
+  end
+
   def receive
     Thread.new do
       kernel.loop do
         message = server.gets.chomp
-        ui.puts(message)
+        client_ui.print(message)
       end
     end
   end
@@ -33,9 +42,13 @@ class Client
   def send
     Thread.new do
       kernel.loop do
-        message = ui.gets
+        message = client_ui.read
         server.puts(message)
       end
     end
+  end
+
+  def client_ui
+    @client_ui = ui.client_ui
   end
 end

@@ -2,11 +2,13 @@ default:
   image: ruby:3.1.1
 
 before_script:
+  - apt install libncurses5-dev
   - gem install bundler -N
   - bundle install --jobs $(nproc) "${FLAGS[@]}"
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - export CC_TEST_REPORTER_ID=a6e60544a13be9d3dd9e6c3fec7e527e491d48c625b01dc10afb50396ec42caf
+  - export TERM=xterm-256color
 
 test:
   script:

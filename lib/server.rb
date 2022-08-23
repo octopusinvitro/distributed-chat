@@ -52,7 +52,7 @@ class Server
       received = client.gets
       break client_error(username, client) unless received
 
-      message = ui.format_message(received, username)
+      message = ui.client_ui.format_message(received, username)
       broadcast(username, message)
     end
   end

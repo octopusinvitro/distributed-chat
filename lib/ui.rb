@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'client_ui'
+
 class UI
   SERVER_MISSING_ERROR = 'Start a server first. Print help with -h.'
   SERVER_DIED_ERROR = 'Chat server has disconnected.'
@@ -41,7 +43,7 @@ class UI
     "#{username} left the chat."
   end
 
-  def format_message(message, username)
-    "<#{username}> #{message}"
+  def client_ui
+    @client_ui ||= ClientUI.new
   end
 end
